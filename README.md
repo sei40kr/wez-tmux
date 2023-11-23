@@ -21,27 +21,15 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
+-- If you have your own leader key, make sure to set it before loading this
+-- plugin.
+config.leader = { key = "b", mods = "CTRL" }
+
 -- Add these lines:
 require("wez-tmux.plugin").apply_to_config(config, {})
 
 return config
 ```
-
-## Options
-
-**Default Options**
-
-```lua
-require("wez-tmux.plugin").apply_to_config(config, {
-    leader = { key = "b", mods = "CTRL" },
-})
-```
-
----
-
-| Option   | Default                        | Description |
-| -------- | ------------------------------ | ----------- |
-| `leader` | `{ key = "b", mods = "CTRL" }` | Leader key  |
 
 ## Key Bindings
 
