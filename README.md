@@ -38,6 +38,17 @@ return config
 | `leader+leader` | Send `leader` key                                                  |
 | `leader+[`      | Activate [Copy Mode](https://wezfurlong.org/wezterm/copymode.html) |
 
+### Workspaces
+
+| Key        | Action                                         |
+| ---------- | ---------------------------------------------- |
+| `leader+$` | Rename the active workspace                    |
+| `leader+d` | Unsupported                                    |
+| `leader+s` | List workspaces and switch to the selected one |
+| `leader+w` | Unsupported                                    |
+| `leader+(` | Switch to the previous workspace               |
+| `leader+)` | Switch to the next workspace                   |
+
 ### Tabs
 
 | Key           | Action                                  |

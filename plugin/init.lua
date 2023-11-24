@@ -3,6 +3,44 @@ local M = {}
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+M.action = {
+  RenameWorkspace = wezterm.action_callback(function(window, pane)
+    window:perform_action(act.PromptInputLine({
+      description = "Rename workspace: ",
+      action = wezterm.action_callback(function(_, _, line)
+        if not line or line == "" then
+          return
+        end
+
+        wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
+      end),
+    }), pane)
+  end),
+
+  WorkspaceSelect = wezterm.action_callback(function(window, pane)
+    local workspaces = {}
+
+    for _, workspace in ipairs(wezterm.mux.get_workspace_names()) do
+      table.insert(workspaces, {
+        id = workspace,
+        label = workspace,
+      })
+    end
+
+    window:perform_action(act.InputSelector({
+      title = "Select Workspace",
+      choices = workspaces,
+      action = wezterm.action_callback(function(_, _, id, _)
+        if not id then
+          return
+        end
+
+        wezterm.mux.set_active_workspace(id)
+      end),
+    }), pane)
+  end),
+}
+
 ---@param config unknown
 ---@param _ { }
 function M.apply_to_config(config, _)
@@ -13,6 +51,12 @@ function M.apply_to_config(config, _)
 
   local keys = {
     { key = config.leader.key, mods = "LEADER|" .. config.leader.mods, action = act.SendKey(config.leader) },
+
+    -- Workspaces
+    { key = "$",               mods = "LEADER",                        action = M.action.RenameWorkspace },
+    { key = "s",               mods = "LEADER",                        action = M.action.WorkspaceSelect },
+    { key = "(",               mods = "LEADER",                        action = act.SwitchWorkspaceRelative(-1) },
+    { key = ")",               mods = "LEADER",                        action = act.SwitchWorkspaceRelative(1) },
 
     -- Tabs
     { key = "c",               mods = "LEADER",                        action = act.SpawnTab("CurrentPaneDomain") },
