@@ -64,20 +64,21 @@ return config
 
 ### Panes
 
-| Key                 | Action                                         |
-| ------------------- | ---------------------------------------------- |
-| `leader+%`          | Split the current pane horizontally            |
-| `leader+"`          | Split the current pane vertically              |
-| `leader+{`          | Rotate the sequence of panes counter-clockwise |
-| `leader+}`          | Rotate the sequence of panes clockwise         |
-| `leader+left`       | Activate the pane to the left                  |
-| `leader+down`       | Activate the pane below                        |
-| `leader+up`         | Activate the pane above                        |
-| `leader+right`      | Activate the pane to the right                 |
-| `leader+q`          | Activate the pane selection modal display      |
-| `leader+z`          | Toggle the zoom state of the current pane      |
-| `leader+ctrl+left`  | Resize the current pane to the left            |
-| `leader+ctrl+down`  | Resize the current pane below                  |
-| `leader+ctrl+up`    | Resize the current pane above                  |
-| `leader+ctrl+right` | Resize the current pane to the right           |
-| `leader+x`          | Close the current pane                         |
+| Key                 | Action                                                                          |
+| ------------------- | ------------------------------------------------------------------------------- |
+| `leader+%`          | Split the current pane horizontally                                             |
+| `leader+"`          | Split the current pane vertically                                               |
+| `leader+{`          | Rotate the sequence of panes counter-clockwise                                  |
+| `leader+}`          | Rotate the sequence of panes clockwise                                          |
+| `leader+left`       | Activate the pane to the left                                                   |
+| `leader+down`       | Activate the pane below                                                         |
+| `leader+up`         | Activate the pane above                                                         |
+| `leader+right`      | Activate the pane to the right                                                  |
+| `leader+q`          | Activate the pane selection modal display                                       |
+| `leader+z`          | Toggle the zoom state of the current pane                                       |
+| `leader+!`          | Create a new tab in the current window and moves the current pane into that tab |
+| `leader+ctrl+left`  | Resize the current pane to the left                                             |
+| `leader+ctrl+down`  | Resize the current pane below                                                   |
+| `leader+ctrl+up`    | Resize the current pane above                                                   |
+| `leader+ctrl+right` | Resize the current pane to the right                                            |
+| `leader+x`          | Close the current pane                                                          |

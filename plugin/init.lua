@@ -4,6 +4,11 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 
 M.action = {
+  MovePaneToNewTab = wezterm.action_callback(function(_, pane)
+    local tab, _ = pane:move_to_new_tab()
+    tab:activate()
+  end),
+
   RenameWorkspace = wezterm.action_callback(function(window, pane)
     window:perform_action(act.PromptInputLine({
       description = "Rename workspace: ",
@@ -76,6 +81,7 @@ function M.apply_to_config(config, _)
     { key = "RightArrow",      mods = "LEADER",                        action = act.ActivatePaneDirection("Right") },
     { key = "q",               mods = "LEADER",                        action = act.PaneSelect({ mode = "Activate" }) },
     { key = "z",               mods = "LEADER",                        action = act.TogglePaneZoomState },
+    { key = "!",               mods = "LEADER",                        action = M.action.MovePaneToNewTab },
     { key = "LeftArrow",       mods = "LEADER|CTRL",                   action = act.AdjustPaneSize({ "Left", 5 }) },
     { key = "DownArrow",       mods = "LEADER|CTRL",                   action = act.AdjustPaneSize({ "Down", 5 }) },
     { key = "UpArrow",         mods = "LEADER|CTRL",                   action = act.AdjustPaneSize({ "Up", 5 }) },
