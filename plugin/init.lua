@@ -28,7 +28,7 @@ M.action = {
     local workspaces = {
       {
         id = active_workspace,
-        label = active_workspace,
+        label = active_workspace .. " (active)",
       },
     }
 
