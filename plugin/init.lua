@@ -25,25 +25,39 @@ M.action = {
 
   WorkspaceSelect = wezterm.action_callback(function(window, pane)
     local active_workspace = mux.get_active_workspace()
-    local workspaces = {
+    local workspaces = mux.get_workspace_names()
+    local num_tabs_by_workspace = {}
+
+    for _, mux_window in ipairs(mux.all_windows()) do
+      local workspace = mux_window:get_workspace()
+      local num_tabs = #mux_window:tabs()
+
+      if num_tabs_by_workspace[workspace] then
+        num_tabs_by_workspace[workspace] = num_tabs_by_workspace[workspace] + num_tabs
+      else
+        num_tabs_by_workspace[workspace] = num_tabs
+      end
+    end
+
+    local choices = {
       {
         id = active_workspace,
-        label = active_workspace .. " (active)",
+        label = active_workspace .. ": " .. num_tabs_by_workspace[active_workspace] .. " tabs (active)",
       },
     }
 
-    for _, workspace in ipairs(mux.get_workspace_names()) do
+    for _, workspace in ipairs(workspaces) do
       if workspace ~= active_workspace then
-        table.insert(workspaces, {
+        table.insert(choices, {
           id = workspace,
-          label = workspace,
+          label = workspace .. ": " .. num_tabs_by_workspace[workspace] .. " tabs",
         })
       end
     end
 
     window:perform_action(act.InputSelector({
       title = "Select Workspace",
-      choices = workspaces,
+      choices = choices,
       action = wezterm.action_callback(function(_, _, id, _)
         if not id then
           return
