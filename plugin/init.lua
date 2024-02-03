@@ -14,7 +14,10 @@ wezterm.GLOBAL.search_directions = {}
 M.action = {
   ClearPattern = wezterm.action_callback(function(window, pane)
     wezterm.GLOBAL.search_directions[tostring(pane)] = nil
-    window:perform_action(act.CopyMode("ClearPattern"), pane)
+    window:perform_action(act.Multiple({
+      act.CopyMode("ClearPattern"),
+      act.CopyMode("AcceptPattern"),
+    }), pane)
   end),
 
   ClearSelectionOrClearPatternOrClose = wezterm.action_callback(function(window, pane)
