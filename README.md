@@ -82,3 +82,36 @@ return config
 | `leader+ctrl+up`    | Resize the current pane above                                                   |
 | `leader+ctrl+right` | Resize the current pane to the right                                            |
 | `leader+x`          | Close the current pane                                                          |
+
+### Copy Mode
+
+| Key       | Action                                                  |
+| --------- | ------------------------------------------------------- |
+| `y`       | Copy and exit copy mode                                 |
+| `escape`  | Clear selection / Clear search pattern / Exit copy mode |
+| `v`       | Cell selection                                          |
+| `shift+v` | Line selection                                          |
+| `ctrl+v`  | Rectangular selection                                   |
+| `h`       | Move Left                                               |
+| `j`       | Move Down                                               |
+| `k`       | Move Up                                                 |
+| `l`       | Move Right                                              |
+| `w`       | Move forward one word                                   |
+| `b`       | Move backward one word                                  |
+| `e`       | Move forward one word end                               |
+| `0`       | Move to start of this line                              |
+| `$`       | Move to end of this line                                |
+| `^`       | Move to start of indented line                          |
+| `shift+g` | Move to bottom of scrollback                            |
+| `g`       | Move to top of scrollback                               |
+| `shift+h` | Move to top of viewport                                 |
+| `shift+m` | Move to middle of viewport                              |
+| `shift+l` | Move to bottom of viewport                              |
+| `ctrl+b`  | Move up one screen                                      |
+| `ctrl+u`  | Move up half screen                                     |
+| `ctrl+f`  | Move down one screen                                    |
+| `ctrl+d`  | Move down half screen                                   |
+| `/`       | Search forward                                          |
+| `?`       | Search backward                                         |
+| `n`       | Next keyword occurrence                                 |
+| `N`       | Previous keyword occurrence                             |
