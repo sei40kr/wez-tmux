@@ -9,11 +9,11 @@ local search_direction = {
   FORWARD = 1,
 }
 
-wezterm.GLOBAL.search_directions = {}
+wezterm.GLOBAL.tmux_search_directions = {}
 
 M.action = {
   ClearPattern = wezterm.action_callback(function(window, pane)
-    wezterm.GLOBAL.search_directions[tostring(pane)] = nil
+    wezterm.GLOBAL.tmux_search_directions[tostring(pane)] = nil
     window:perform_action(act.Multiple({
       act.CopyMode("ClearPattern"),
       act.CopyMode("AcceptPattern"),
@@ -28,7 +28,7 @@ M.action = {
         act.ClearSelection,
         act.CopyMode("ClearSelectionMode"),
       })
-    elseif wezterm.GLOBAL.search_directions[tostring(pane)] then
+    elseif wezterm.GLOBAL.tmux_search_directions[tostring(pane)] then
       action = M.action.ClearPattern
     else
       action = act.CopyMode("Close")
@@ -38,7 +38,7 @@ M.action = {
   end),
 
   NextMatch = wezterm.action_callback(function(window, pane)
-    local direction = wezterm.GLOBAL.search_directions[tostring(pane)]
+    local direction = wezterm.GLOBAL.tmux_search_directions[tostring(pane)]
     local action
 
     if not direction then
@@ -63,7 +63,7 @@ M.action = {
   end),
 
   PriorMatch = wezterm.action_callback(function(window, pane)
-    local direction = wezterm.GLOBAL.search_directions[tostring(pane)]
+    local direction = wezterm.GLOBAL.tmux_search_directions[tostring(pane)]
     local action
 
     if not direction then
@@ -106,7 +106,7 @@ M.action = {
   end),
 
   SearchBackward = wezterm.action_callback(function(window, pane)
-    wezterm.GLOBAL.search_directions[tostring(pane)] = search_direction.BACKWARD
+    wezterm.GLOBAL.tmux_search_directions[tostring(pane)] = search_direction.BACKWARD
 
     window:perform_action(act.Multiple({
       act.CopyMode("ClearPattern"),
@@ -115,7 +115,7 @@ M.action = {
   end),
 
   SearchForward = wezterm.action_callback(function(window, pane)
-    wezterm.GLOBAL.search_directions[tostring(pane)] = search_direction.FORWARD
+    wezterm.GLOBAL.tmux_search_directions[tostring(pane)] = search_direction.FORWARD
 
     window:perform_action(act.Multiple({
       act.CopyMode("ClearPattern"),
