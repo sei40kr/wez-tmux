@@ -270,7 +270,14 @@ function M.apply_to_config(config, _)
   }
 
   local search_mode = {
-    { key = "Enter",  action = act.CopyMode("AcceptPattern") },
+    {
+      key = "Enter",
+      action = act.Multiple({
+        act.CopyMode("AcceptPattern"),
+        act.ClearSelection,
+        act.CopyMode("ClearSelectionMode"),
+      }),
+    },
     { key = "Escape", action = M.action.ClearPattern },
   }
 
