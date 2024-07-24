@@ -83,6 +83,12 @@ return config
 | `leader+ctrl+right` | Resize the current pane to the right                                            |
 | `leader+x`          | Close the current pane                                                          |
 
+### Misc
+
+| Key            | Action                                                                        |
+| -------------- | ----------------------------------------------------------------------------- |
+| `leader+space` | Activate [Quick Select Mode](https://wezfurlong.org/wezterm/quickselect.html) |
+
 ### Copy Mode
 
 | Key       | Action                                                  |
