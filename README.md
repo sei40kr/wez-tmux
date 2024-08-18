@@ -121,3 +121,11 @@ return config
 | `?`       | Search backward                                         |
 | `n`       | Next keyword occurrence                                 |
 | `N`       | Previous keyword occurrence                             |
+
+## Troubleshooting
+
+### `ctrl+b` in Copy Mode does not work
+
+If you don't set the leader key or explicitly set it to `ctrl+b`, it will
+conflict with `ctrl+b` (Move up one screen) in Copy Mode.
+Please set the leader key to something other than `ctrl+b`.
