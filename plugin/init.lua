@@ -181,14 +181,14 @@ function M.apply_to_config(config, _)
     { key = config.leader.key, mods = "LEADER|" .. config.leader.mods, action = act.SendKey(config.leader) },
 
     -- Workspaces
-    { key = "$",               mods = "LEADER",                        action = M.action.RenameWorkspace },
+    { key = "$",               mods = "LEADER|SHIFT",                        action = M.action.RenameWorkspace },
     { key = "s",               mods = "LEADER",                        action = M.action.WorkspaceSelect },
-    { key = "(",               mods = "LEADER",                        action = act.SwitchWorkspaceRelative(-1) },
-    { key = ")",               mods = "LEADER",                        action = act.SwitchWorkspaceRelative(1) },
+    { key = "(",               mods = "LEADER|SHIFT",                        action = act.SwitchWorkspaceRelative(-1) },
+    { key = ")",               mods = "LEADER|SHIFT",                        action = act.SwitchWorkspaceRelative(1) },
 
     -- Tabs
     { key = "c",               mods = "LEADER",                        action = act.SpawnTab("CurrentPaneDomain") },
-    { key = "&",               mods = "LEADER",                        action = act.CloseCurrentTab({ confirm = true }) },
+    { key = "&",               mods = "LEADER|SHIFT",                        action = act.CloseCurrentTab({ confirm = true }) },
     { key = "p",               mods = "LEADER",                        action = act.ActivateTabRelative(-1) },
     { key = "n",               mods = "LEADER",                        action = act.ActivateTabRelative(1) },
     { key = "l",               mods = "LEADER",                        action = act.ActivateLastTab },
@@ -196,25 +196,25 @@ function M.apply_to_config(config, _)
     -- Panes
     {
       key = "%",
-      mods = "LEADER",
+      mods = "LEADER|SHIFT",
       action = act.SplitHorizontal({
         domain = "CurrentPaneDomain" })
     },
     {
       key = "\"",
-      mods = "LEADER",
+      mods = "LEADER|SHIFT",
       action = act.SplitVertical({
         domain = "CurrentPaneDomain" })
     },
-    { key = "{",          mods = "LEADER",      action = act.RotatePanes("CounterClockwise") },
-    { key = "}",          mods = "LEADER",      action = act.RotatePanes("Clockwise") },
+    { key = "{",          mods = "LEADER|SHIFT",      action = act.RotatePanes("CounterClockwise") },
+    { key = "}",          mods = "LEADER|SHIFT",      action = act.RotatePanes("Clockwise") },
     { key = "LeftArrow",  mods = "LEADER",      action = act.ActivatePaneDirection("Left") },
     { key = "DownArrow",  mods = "LEADER",      action = act.ActivatePaneDirection("Down") },
     { key = "UpArrow",    mods = "LEADER",      action = act.ActivatePaneDirection("Up") },
     { key = "RightArrow", mods = "LEADER",      action = act.ActivatePaneDirection("Right") },
     { key = "q",          mods = "LEADER",      action = act.PaneSelect({ mode = "Activate" }) },
     { key = "z",          mods = "LEADER",      action = act.TogglePaneZoomState },
-    { key = "!",          mods = "LEADER",      action = M.action.MovePaneToNewTab },
+    { key = "!",          mods = "LEADER|SHIFT",      action = M.action.MovePaneToNewTab },
     { key = "LeftArrow",  mods = "LEADER|CTRL", action = act.AdjustPaneSize({ "Left", 5 }) },
     { key = "DownArrow",  mods = "LEADER|CTRL", action = act.AdjustPaneSize({ "Down", 5 }) },
     { key = "UpArrow",    mods = "LEADER|CTRL", action = act.AdjustPaneSize({ "Up", 5 }) },
