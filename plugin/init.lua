@@ -183,14 +183,14 @@ function M.apply_to_config(config, _)
       action = act.SendKey({ key = config.leader.key, mods = config.leader.mods }) },
 
     -- Workspaces
-    { key = "$",               mods = "LEADER",                        action = M.action.RenameWorkspace },
+    { key = "$",               mods = "LEADER|SHIFT",                  action = M.action.RenameWorkspace },
     { key = "s",               mods = "LEADER",                        action = M.action.WorkspaceSelect },
-    { key = "(",               mods = "LEADER",                        action = act.SwitchWorkspaceRelative(-1) },
-    { key = ")",               mods = "LEADER",                        action = act.SwitchWorkspaceRelative(1) },
+    { key = "(",               mods = "LEADER|SHIFT",                  action = act.SwitchWorkspaceRelative(-1) },
+    { key = ")",               mods = "LEADER|SHIFT",                  action = act.SwitchWorkspaceRelative(1) },
 
     -- Tabs
     { key = "c",               mods = "LEADER",                        action = act.SpawnTab("CurrentPaneDomain") },
-    { key = "&",               mods = "LEADER",                        action = act.CloseCurrentTab({ confirm = true }) },
+    { key = "&",               mods = "LEADER|SHIFT",                  action = act.CloseCurrentTab({ confirm = true }) },
     { key = "p",               mods = "LEADER",                        action = act.ActivateTabRelative(-1) },
     { key = "n",               mods = "LEADER",                        action = act.ActivateTabRelative(1) },
     { key = "l",               mods = "LEADER",                        action = act.ActivateLastTab },
@@ -198,32 +198,32 @@ function M.apply_to_config(config, _)
     -- Panes
     {
       key = "%",
-      mods = "LEADER",
+      mods = "LEADER|SHIFT",
       action = act.SplitHorizontal({
         domain = "CurrentPaneDomain" })
     },
     {
       key = "\"",
-      mods = "LEADER",
+      mods = "LEADER|SHIFT",
       action = act.SplitVertical({
         domain = "CurrentPaneDomain" })
     },
-    { key = "{",          mods = "LEADER",      action = act.RotatePanes("CounterClockwise") },
-    { key = "}",          mods = "LEADER",      action = act.RotatePanes("Clockwise") },
-    { key = "LeftArrow",  mods = "LEADER",      action = act.ActivatePaneDirection("Left") },
-    { key = "DownArrow",  mods = "LEADER",      action = act.ActivatePaneDirection("Down") },
-    { key = "UpArrow",    mods = "LEADER",      action = act.ActivatePaneDirection("Up") },
-    { key = "RightArrow", mods = "LEADER",      action = act.ActivatePaneDirection("Right") },
-    { key = "q",          mods = "LEADER",      action = act.PaneSelect({ mode = "Activate" }) },
-    { key = "z",          mods = "LEADER",      action = act.TogglePaneZoomState },
-    { key = "!",          mods = "LEADER",      action = M.action.MovePaneToNewTab },
-    { key = "LeftArrow",  mods = "LEADER|CTRL", action = act.AdjustPaneSize({ "Left", 5 }) },
-    { key = "DownArrow",  mods = "LEADER|CTRL", action = act.AdjustPaneSize({ "Down", 5 }) },
-    { key = "UpArrow",    mods = "LEADER|CTRL", action = act.AdjustPaneSize({ "Up", 5 }) },
-    { key = "RightArrow", mods = "LEADER|CTRL", action = act.AdjustPaneSize({ "Right", 5 }) },
-    { key = "x",          mods = "LEADER",      action = act.CloseCurrentPane({ confirm = true }) },
+    { key = "{",          mods = "LEADER|SHIFT", action = act.RotatePanes("CounterClockwise") },
+    { key = "}",          mods = "LEADER|SHIFT", action = act.RotatePanes("Clockwise") },
+    { key = "LeftArrow",  mods = "LEADER",       action = act.ActivatePaneDirection("Left") },
+    { key = "DownArrow",  mods = "LEADER",       action = act.ActivatePaneDirection("Down") },
+    { key = "UpArrow",    mods = "LEADER",       action = act.ActivatePaneDirection("Up") },
+    { key = "RightArrow", mods = "LEADER",       action = act.ActivatePaneDirection("Right") },
+    { key = "q",          mods = "LEADER",       action = act.PaneSelect({ mode = "Activate" }) },
+    { key = "z",          mods = "LEADER",       action = act.TogglePaneZoomState },
+    { key = "!",          mods = "LEADER|SHIFT", action = M.action.MovePaneToNewTab },
+    { key = "LeftArrow",  mods = "LEADER|CTRL",  action = act.AdjustPaneSize({ "Left", 5 }) },
+    { key = "DownArrow",  mods = "LEADER|CTRL",  action = act.AdjustPaneSize({ "Down", 5 }) },
+    { key = "UpArrow",    mods = "LEADER|CTRL",  action = act.AdjustPaneSize({ "Up", 5 }) },
+    { key = "RightArrow", mods = "LEADER|CTRL",  action = act.AdjustPaneSize({ "Right", 5 }) },
+    { key = "x",          mods = "LEADER",       action = act.CloseCurrentPane({ confirm = true }) },
 
-    { key = " ",          mods = "LEADER",      action = act.QuickSelect },
+    { key = " ",          mods = "LEADER",       action = act.QuickSelect },
 
     -- Copy Mode
     { key = "[",          mods = "LEADER",      action = act.ActivateCopyMode },
@@ -256,8 +256,8 @@ function M.apply_to_config(config, _)
     { key = "b",      mods = "NONE",  action = act.CopyMode("MoveBackwardWord") },
     { key = "e",      mods = "NONE",  action = act.CopyMode("MoveForwardWordEnd") },
     { key = "0",      mods = "NONE",  action = act.CopyMode("MoveToStartOfLine") },
-    { key = "$",      mods = "NONE",  action = act.CopyMode("MoveToEndOfLineContent") },
-    { key = "^",      mods = "NONE",  action = act.CopyMode("MoveToStartOfLineContent") },
+    { key = "$",      mods = "SHIFT", action = act.CopyMode("MoveToEndOfLineContent") },
+    { key = "^",      mods = "SHIFT", action = act.CopyMode("MoveToStartOfLineContent") },
     { key = "G",      mods = "NONE",  action = act.CopyMode("MoveToScrollbackBottom") },
     { key = "g",      mods = "NONE",  action = act.CopyMode("MoveToScrollbackTop") },
     { key = "h",      mods = "SHIFT", action = act.CopyMode("MoveToViewportTop") },
@@ -269,7 +269,7 @@ function M.apply_to_config(config, _)
     { key = "d",      mods = "CTRL",  action = act.CopyMode { MoveByPage = 0.5 } },
 
     { key = "/",      mods = "NONE",  action = M.action.SearchForward },
-    { key = "?",      mods = "NONE",  action = M.action.SearchBackward },
+    { key = "?",      mods = "SHIFT", action = M.action.SearchBackward },
     { key = "n",      mods = "NONE",  action = M.action.NextMatch },
     { key = "N",      mods = "NONE",  action = M.action.PriorMatch },
   }
