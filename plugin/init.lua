@@ -188,8 +188,14 @@ function M.apply_to_config(config, _)
   end
 
   local keys = {
-    { key = config.leader.key, mods = "LEADER|" .. config.leader.mods, action = act.SendKey(config.leader) },
-
+    {
+        key = config.leader.key,
+        mods = "LEADER|" .. config.leader.mods,
+        action = act.SendKey({
+                key = config.leader.key,
+                mods = config.leader.mods,
+        }),
+    },
     -- Workspaces
     { key = "$",               mods = "LEADER|SHIFT",                        action = M.action.RenameWorkspace },
     { key = "s",               mods = "LEADER",                        action = M.action.WorkspaceSelect },
