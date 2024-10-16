@@ -167,6 +167,16 @@ M.action = {
       end),
     }), pane)
   end),
+
+  RenameCurrentTab = wezterm.action_callback(function(win, pane)
+    win:perform_action(act.PromptInputLine({
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(_, _, line)
+        if not line or line == "" then return end
+        win:active_tab():set_title(line)
+      end),
+    }), pane)
+  end),
 }
 
 ---@param config unknown
@@ -227,6 +237,7 @@ function M.apply_to_config(config, _)
 
     -- Copy Mode
     { key = "[",          mods = "LEADER",      action = act.ActivateCopyMode },
+    { key = ",",          mods = "LEADER",      action = M.action.RenameCurrentTab },
   }
 
   local index_offset = config.tab_and_split_indices_are_zero_based and 0 or 1
