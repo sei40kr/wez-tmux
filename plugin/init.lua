@@ -227,8 +227,9 @@ function M.apply_to_config(config, _)
     { key = "[",          mods = "LEADER",      action = act.ActivateCopyMode },
   }
 
-  for i = 1, 9 do
-    table.insert(keys, { key = tostring(i), mods = "LEADER", action = act.ActivateTab(i - 1) })
+  local index_offset = config.tab_and_split_indices_are_zero_based and 0 or 1
+  for i = index_offset, 9 do
+    table.insert(keys, { key = tostring(i), mods = "LEADER", action = act.ActivateTab(i - index_offset) })
   end
 
   local copy_mode = {
