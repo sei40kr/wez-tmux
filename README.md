@@ -1,131 +1,208 @@
 # wez-tmux
 
-Port [tmux](https://github.com/tmux/tmux) key bindings to [WezTerm](https://wezfurlong.org/wezterm).
+Port [tmux](https://github.com/tmux/tmux) key bindings to [WezTerm](https://wezterm.org), bringing familiar tmux navigation patterns to modern terminal emulator.
 
-## Installation
+> **Note**: This plugin ports tmux **key bindings only**, not the complete workflow or session management system.
 
-Clone this repository to your `$XDG_CONFIG_HOME/wezterm`:
+## 🗺️ Concept Mapping: tmux ↔ WezTerm
 
-```sh
-git clone https://github.com/sei40kr/wez-tmux.git $XDG_CONFIG_HOME/wezterm
+| tmux Concept   | WezTerm Equivalent | Description                                                         |
+| -------------- | ------------------ | ------------------------------------------------------------------- |
+| **Session**    | **Workspace**      | Isolated environments for different projects/contexts               |
+| **Window**     | **Tab**            | Multiple terminal views within a session/workspace                  |
+| **Pane**       | **Pane**           | Split views within a window/tab                                     |
+| **Prefix key** | **Leader key**     | Modifier key that activates tmux-style commands (default: `Ctrl+b`) |
+| **Copy mode**  | **Copy mode**      | Text selection and navigation mode with enhanced capabilities       |
+
+## ✨ Features
+
+- **Familiar Key Bindings**: All major tmux key combinations supported
+- **Basic Navigation**: tmux-style pane splitting, navigation, and resizing
+- **Copy Mode**: Enhanced text selection with tmux navigation patterns
+- **Customizable**: Easy configuration and leader key customization
+- **Native Integration**: Leverages WezTerm's native capabilities
+
+## 🚀 Installation
+
+### Method 1: Git Clone (Recommended)
+
+```bash
+# Clone into your WezTerm plugins directory
+git clone https://github.com/sei40kr/wez-tmux.git "${XDG_CONFIG_HOME:-$HOME/.config}/wezterm/plugins/wez-tmux"
 ```
 
-## Usage
+### Method 2: Manual Installation
+
+1. Download or clone this repository
+2. Place the `plugin` directory in your WezTerm plugins path:
+   ```bash
+   # Typically:
+   cp -r wez-tmux/plugin ~/.config/wezterm/plugins/wez-tmux/
+   ```
+
+## ⚙️ Configuration
+
+Add to your `wezterm.lua` configuration file:
 
 ```lua
 local wezterm = require("wezterm")
 
-local config = {}
+-- Initialize config with wezterm.config_builder() for forward compatibility
+local config = wezterm.config_builder()
 
-if wezterm.config_builder then
-    config = wezterm.config_builder()
-end
+-- Configure your leader key (recommended to avoid conflicts)
+config.leader = { key = "a", mods = "CTRL" }  -- Use Ctrl+a instead of default Ctrl+b
 
--- If you have your own leader key, make sure to set it before loading this
--- plugin.
-config.leader = { key = "b", mods = "CTRL" }
-
--- Add these lines:
-require("wez-tmux.plugin").apply_to_config(config, {})
+-- Apply wez-tmux plugin with optional configuration
+require("plugins.wez-tmux.plugin").apply_to_config(config, {
+    -- Optional: Customize tab index base (0-based or 1-based)
+    -- tab_and_split_indices_are_zero_based = true
+})
 
 return config
 ```
 
-## Key Bindings
+## ⌨️ Comprehensive Key Bindings Reference
 
-| Key             | Action                                                             |
-| --------------- | ------------------------------------------------------------------ |
-| `leader+leader` | Send `leader` key                                                  |
-| `leader+[`      | Activate [Copy Mode](https://wezfurlong.org/wezterm/copymode.html) |
+### Leader Key Basics
 
-### Workspaces
+| Key Combination   | Description                        |
+| ----------------- | ---------------------------------- |
+| `leader + leader` | Send the leader key itself         |
+| `leader + [`      | Enter copy mode for text selection |
 
-| Key        | Action                                         |
-| ---------- | ---------------------------------------------- |
-| `leader+$` | Rename the active workspace                    |
-| `leader+d` | Unsupported                                    |
-| `leader+s` | List workspaces and switch to the selected one |
-| `leader+w` | Unsupported                                    |
-| `leader+(` | Switch to the previous workspace               |
-| `leader+)` | Switch to the next workspace                   |
+### Workspace Management (tmux Sessions)
 
-### Tabs
+| Key Combination | Description                    |
+| --------------- | ------------------------------ |
+| `leader + $`    | Rename current workspace       |
+| `leader + s`    | Interactive workspace switcher |
+| `leader + (`    | Switch to previous workspace   |
+| `leader + )`    | Switch to next workspace       |
 
-| Key           | Action                                  |
-| ------------- | --------------------------------------- |
-| `leader+c`    | Create a new tab in the current window  |
-| `leader+,`    | Unsupported                             |
-| `leader+&`    | Close the current tab                   |
-| `leader+w`    | Unsupported                             |
-| `leader+p`    | Activate the previous tab               |
-| `leader+n`    | Activate the next tab                   |
-| `leader+1..9` | Activate the tab at the specified index |
-| `leader+l`    | Activate the previously active tab      |
+### Tab Operations (tmux Windows)
 
-### Panes
+| Key Combination | Description                           |
+| --------------- | ------------------------------------- |
+| `leader + c`    | Create new tab in current domain      |
+| `leader + &`    | Close current tab (with confirmation) |
+| `leader + p`    | Switch to previous tab                |
+| `leader + n`    | Switch to next tab                    |
+| `leader + l`    | Switch to last active tab             |
+| `leader + 1-9`  | Switch to specific tab by index       |
 
-| Key                 | Action                                                                          |
-| ------------------- | ------------------------------------------------------------------------------- |
-| `leader+%`          | Split the current pane horizontally                                             |
-| `leader+"`          | Split the current pane vertically                                               |
-| `leader+{`          | Rotate the sequence of panes counter-clockwise                                  |
-| `leader+}`          | Rotate the sequence of panes clockwise                                          |
-| `leader+left`       | Activate the pane to the left                                                   |
-| `leader+down`       | Activate the pane below                                                         |
-| `leader+up`         | Activate the pane above                                                         |
-| `leader+right`      | Activate the pane to the right                                                  |
-| `leader+q`          | Activate the pane selection modal display                                       |
-| `leader+z`          | Toggle the zoom state of the current pane                                       |
-| `leader+!`          | Create a new tab in the current window and moves the current pane into that tab |
-| `leader+ctrl+left`  | Resize the current pane to the left                                             |
-| `leader+ctrl+down`  | Resize the current pane below                                                   |
-| `leader+ctrl+up`    | Resize the current pane above                                                   |
-| `leader+ctrl+right` | Resize the current pane to the right                                            |
-| `leader+x`          | Close the current pane                                                          |
+### Pane Management
 
-### Misc
+#### Splitting & Navigation
 
-| Key            | Action                                                                        |
-| -------------- | ----------------------------------------------------------------------------- |
-| `leader+space` | Activate [Quick Select Mode](https://wezfurlong.org/wezterm/quickselect.html) |
+| Key Combination  | Description                    |
+| ---------------- | ------------------------------ |
+| `leader + %`     | Split pane horizontally        |
+| `leader + "`     | Split pane vertically          |
+| `leader + {`     | Rotate panes counter-clockwise |
+| `leader + }`     | Rotate panes clockwise         |
+| `leader + arrow` | Navigate to pane in direction  |
+| `leader + q`     | Interactive pane selector      |
 
-### Copy Mode
+#### Resizing & Operations
 
-| Key       | Action                                                  |
-| --------- | ------------------------------------------------------- |
-| `y`       | Copy and exit copy mode                                 |
-| `escape`  | Clear selection / Clear search pattern / Exit copy mode |
-| `v`       | Cell selection                                          |
-| `shift+v` | Line selection                                          |
-| `ctrl+v`  | Rectangular selection                                   |
-| `h`       | Move Left                                               |
-| `j`       | Move Down                                               |
-| `k`       | Move Up                                                 |
-| `l`       | Move Right                                              |
-| `w`       | Move forward one word                                   |
-| `b`       | Move backward one word                                  |
-| `e`       | Move forward one word end                               |
-| `0`       | Move to start of this line                              |
-| `$`       | Move to end of this line                                |
-| `^`       | Move to start of indented line                          |
-| `shift+g` | Move to bottom of scrollback                            |
-| `g`       | Move to top of scrollback                               |
-| `shift+h` | Move to top of viewport                                 |
-| `shift+m` | Move to middle of viewport                              |
-| `shift+l` | Move to bottom of viewport                              |
-| `ctrl+b`  | Move up one screen                                      |
-| `ctrl+u`  | Move up half screen                                     |
-| `ctrl+f`  | Move down one screen                                    |
-| `ctrl+d`  | Move down half screen                                   |
-| `/`       | Search forward                                          |
-| `?`       | Search backward                                         |
-| `n`       | Next keyword occurrence                                 |
-| `N`       | Previous keyword occurrence                             |
+| Key Combination         | Description                            |
+| ----------------------- | -------------------------------------- |
+| `leader + z`            | Zoom/unzoom current pane               |
+| `leader + !`            | Move pane to new tab                   |
+| `leader + ctrl + arrow` | Resize pane in direction (5 cells)     |
+| `leader + x`            | Close current pane (with confirmation) |
 
-## Troubleshooting
+### Copy Mode (Advanced Text Selection)
 
-### `ctrl+b` in Copy Mode does not work
+#### Navigation
 
-If you don't set the leader key or explicitly set it to `ctrl+b`, it will
-conflict with `ctrl+b` (Move up one screen) in Copy Mode.
-Please set the leader key to something other than `ctrl+b`.
+| Key Combination | Description                |
+| --------------- | -------------------------- |
+| `h/j/k/l`       | Basic directional movement |
+| `w/b/e`         | Word-based navigation      |
+| `0`             | Beginning of line          |
+| `$`             | End of line content        |
+| `^`             | Start of line content      |
+| `g`             | Top of scrollback          |
+| `G`             | Bottom of scrollback       |
+| `H/M/L`         | Viewport positioning       |
+
+#### Scrolling & Paging
+
+| Key Combination | Description           |
+| --------------- | --------------------- |
+| `ctrl + b`      | Page up               |
+| `ctrl + f`      | Page down             |
+| `ctrl + u`      | Scroll up half page   |
+| `ctrl + d`      | Scroll down half page |
+
+#### Search & Selection
+
+| Key Combination | Description             |
+| --------------- | ----------------------- |
+| `/`             | Search forward          |
+| `?`             | Search backward         |
+| `n`             | Next search result      |
+| `N`             | Previous search result  |
+| `v`             | Cell selection mode     |
+| `shift + v`     | Line selection mode     |
+| `ctrl + v`      | Block selection mode    |
+| `y`             | Copy selection and exit |
+| `Escape`        | Clear selection or exit |
+
+## 🛠️ Advanced Configuration
+
+### Custom Leader Key
+
+```lua
+-- Use Ctrl+Space as leader (recommended for minimal conflicts)
+config.leader = { key = "Space", mods = "CTRL" }
+
+-- Or use a letter key with modifier
+config.leader = { key = "a", mods = "CTRL" }      -- Ctrl+a
+config.leader = { key = "Space", mods = "ALT" }   -- Alt+Space
+```
+
+### Zero-based vs One-based Indexing
+
+```lua
+require("wez-tmux.plugin").apply_to_config(config, {
+    -- Use 0-based indexing for tabs (leader+0 for first tab)
+    tab_and_split_indices_are_zero_based = true,
+
+    -- Or keep 1-based indexing (default, leader+1 for first tab)
+    tab_and_split_indices_are_zero_based = false,
+})
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### Copy Mode `Ctrl+b` Conflict
+
+**Problem**: `Ctrl+b` doesn't work in copy mode for page up
+
+**Solution**: Use a different leader key than `Ctrl+b`:
+
+```lua
+config.leader = { key = "a", mods = "CTRL" }  -- Use Ctrl+a instead
+```
+
+#### Key Binding Conflicts
+
+**Problem**: Custom key bindings not working
+
+**Solution**: Load wez-tmux after your custom bindings, or use `wezterm.GLOBAL` for advanced customization
+
+#### Plugin Not Found
+
+**Problem**: `require("plugins.wez-tmux.plugin")` fails
+
+**Solution**: Ensure the plugin directory is in your WezTerm plugins path:
+
+```lua
+-- Add this if plugin isn't found automatically
+package.path = package.path .. ";" .. wezterm.config_dir .. "/plugins/wez-tmux/?.lua"
+```
